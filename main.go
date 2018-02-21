@@ -27,6 +27,8 @@ var (
 	strignoradas string
 	ignoradas    []string
 	exts         = make(map[string]extSta)
+	tot          = 0
+	totTam       int64
 )
 
 func main() {
@@ -39,12 +41,17 @@ func main() {
 				return filepath.SkipDir
 			}
 		}
+		if info.Name() == "." {
+			return nil
+		}
 		ext := filepath.Ext(info.Name())
 		es := exts[ext]
 		es.Ext = ext
 		es.Qtd += 1
 		es.Tam += info.Size()
 		exts[ext] = es
+		tot += 1
+		totTam += info.Size()
 		return nil
 	})
 	if err != nil {
@@ -57,15 +64,17 @@ func main() {
 	sort.Slice(extStas, func(i, j int) bool {
 		return extStas[i].Qtd > extStas[j].Qtd
 	})
+	fmt.Println("total quantidade:", tot)
 	for _, es := range extStas {
-		fmt.Printf("Ext: %v, Qtd: %v\n", es.Ext, es.Qtd)
+		fmt.Printf("%v: %v\n", es.Ext, es.Qtd)
 	}
 	fmt.Println("---")
+	fmt.Println("total tamanho:", tam(totTam))
 	sort.Slice(extStas, func(i, j int) bool {
 		return extStas[i].Tam > extStas[j].Tam
 	})
 	for _, es := range extStas {
-		fmt.Printf("Ext: %v, Tam: %v\n", es.Ext, tam(es.Tam))
+		fmt.Printf("%v: %v\n", es.Ext, tam(es.Tam))
 	}
 }
 
