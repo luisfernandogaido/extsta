@@ -1,7 +1,7 @@
 ## extsta
 
-Dada uma pasta e uma lista de subpastas a serem ignoradas, listar todas as extensões ordenadas
-por quantidade de arquivos decrescente e tamanho total decrescente.
+Dada uma pasta e uma lista de subpastas a serem ignoradas, `extsta` listar todas as extensões
+ordenadas por quantidade de arquivos decrescente e tamanho total decrescente.
 
 ### Uso
 
